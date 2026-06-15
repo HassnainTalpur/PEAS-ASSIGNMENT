@@ -1,0 +1,61 @@
+{
+  "system_name": "Thyroid Ultrasound Medical Imaging Assistant for Early Malignancy Detection",
+  "peas": {
+    "performance_measures": [
+      "roc_auc",
+      "sensitivity",
+      "specificity",
+      "precision",
+      "f1_score",
+      "calibration_quality",
+      "inference_speed",
+      "external_generalization_gap"
+    ],
+    "environment": "Clinical thyroid ultrasound workflow with radiologists, sonographers, patients, ultrasound machines, hospital image systems, variable image quality, scanner differences, and changing patient populations.",
+    "actuators": [
+      "risk_score",
+      "diagnostic_recommendation",
+      "triage_flag",
+      "uncertainty_warning",
+      "report_support",
+      "visual_explanation",
+      "queue_prioritization"
+    ],
+    "sensors": [
+      "ultrasound_images",
+      "image_metadata",
+      "training_labels",
+      "validation_predictions",
+      "external_validation_images",
+      "optional_lesion_masks",
+      "radiologist_feedback"
+    ]
+  },
+  "environment_classification": {
+    "observability": {
+      "choice": "Partially Observable",
+      "justification": "Images do not include all patient history, biopsy, scanner, and hidden clinical factors."
+    },
+    "agents": {
+      "choice": "Multi-agent",
+      "justification": "The system interacts with clinicians, radiologists, sonographers, hospital systems, and patients."
+    },
+    "determinism": {
+      "choice": "Stochastic",
+      "justification": "Image noise, disease variation, and dataset shift make outcomes uncertain."
+    },
+    "episodic_or_sequential": {
+      "choice": "Sequential",
+      "justification": "The prediction can influence later review, biopsy, follow-up, and treatment decisions."
+    },
+    "static_or_dynamic": {
+      "choice": "Dynamic",
+      "justification": "Patients, workload, scanners, and clinical distributions change over time."
+    },
+    "discrete_or_continuous": {
+      "choice": "Continuous",
+      "justification": "Images and probability scores are continuous before thresholding into labels."
+    }
+  },
+  "utility_function": "U = 0.50*sensitivity + 0.25*specificity + 0.15*calibration_quality - 0.10*computational_cost"
+}
